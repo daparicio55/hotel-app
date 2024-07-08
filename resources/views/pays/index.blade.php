@@ -4,6 +4,11 @@
 
 @section('content_header')
     <h1>Control de Pagos</h1>
+    <a href="">
+        <a class="btn btn-success mt-2" href="{{ route('pays.create') }}">
+            <i class="fas fa-plus-square"></i> Nuevo Pago
+        </a>
+    </a>
 @stop
 @section('content')
 <x-alert_index/>
@@ -14,34 +19,24 @@
                     <th>id</th>
                     <th>Fecha</th>
                     <th>Cliente</th>
-                    <th>Habitaciones</th>
-                    <th>Entrada</th>
-                    <th>Salida</th>
+                    <th>Tipo</th>
+                    <th>Numero</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($reservations as $key => $reservation)
+                @foreach ($pays as $key => $pay)
                     <tr>
-                        <td>{{ $reservation->id }}</td>
-                        <td>{{ date('d-m-Y',strtotime($reservation->date)) }}</td>
-                        <td>{{ $reservation->client->name }}</td>
+                        <td>{{ $pay->id }}</td>
+                        <td>{{ date('d-m-Y',strtotime($pay->date)) }}</td>
+                        <td>{{ $pay->reservation->client->name }}</td>
+                        <td>{{ $pay->type }}</td>
+                        <td>{{ $pay->number }}</td>
                         <td>
-                            <ol>
-                                @foreach ($reservation->rooms as $room)
-                                    <li>
-                                        Habitacion: {{ $room->number }} 
-                                    </li>
-                                @endforeach
-                            </ol>
-                        </td>
-                        <td>{{ date('d-m-Y',strtotime($reservation->start)) }}</td>
-                        <td>{{ date('d-m-Y',strtotime($reservation->end)) }}</td>
-                        <td>
-                            <a href="{{ route('reservations.show',$reservation->id) }}" class="btn btn-warning" title="Imprimir Reservación">
+                            <a href="{{ route('pays.show',$pay->id) }}" class="btn btn-warning" title="Imprimir Boleta">
                                 <i class="fas fa-print"></i>
                             </a>
-                            {!! Form::open(['route'=>['reservations.destroy',$reservation->id],'method'=>'delete','class'=>'d-inline']) !!}
+                            {!! Form::open(['route'=>['pays.destroy',$pay->id],'method'=>'delete','class'=>'d-inline']) !!}
                                 <button type="submit" class="btn btn-danger" title="Eliminar Reserva">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
@@ -52,8 +47,4 @@
             </tbody>
         </table>
     </div>
-@stop
-
-@section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
 @stop

@@ -16,8 +16,11 @@ return new class extends Migration
             $table->integer('number');
             $table->date('date');
             $table->unsignedBigInteger('reservation_id');
+            $table->enum('type',['Boleta','Factura']);
+            $table->enum('pago',['Efectivo','Tarjeta','Yape','Plin']);
             $table->unsignedBigInteger('user_id');
             $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
+            $table->unique(['reservation_id']);
             $table->timestamps();
         });
     }

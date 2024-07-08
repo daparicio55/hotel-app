@@ -22,6 +22,6 @@ class Reservation extends Model
         return $this->belongsTo(Client::class);
     }
     public function pay(){
-        return $this->belongsTo(Pay::class);
+        return $this->hasOne(Pay::class);
     }
 }
